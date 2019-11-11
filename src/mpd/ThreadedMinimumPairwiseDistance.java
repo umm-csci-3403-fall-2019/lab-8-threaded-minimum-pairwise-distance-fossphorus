@@ -34,13 +34,14 @@ public class ThreadedMinimumPairwiseDistance implements MinimumPairwiseDistance 
             public void run() {
                 for (int i = N / 2; i < N; ++i) {
                     for (int j = 0; j + N / 2 < i; ++j) {
-                        // Gives us all the pairs (i, j) where 0 <= j < i < values.length
                         long diff = Math.abs(values[i] - values[j]);
                         if (diff < result) {
+                            System.out.println("it happened");
                             result = diff;
                         }
                     }
                 }
+                System.out.println("br: " + result);
                 if (getFinalResult() > result) {
                     setFinalResult(result);
                 }
@@ -53,13 +54,13 @@ public class ThreadedMinimumPairwiseDistance implements MinimumPairwiseDistance 
             public void run() {
                 for (int i = 0; i < N/2; ++i) {
                     for (int j = 0; j < i; ++j) {
-                        // Gives us all the pairs (i, j) where 0 <= j < i < values.length
                         long diff = Math.abs(values[i] - values[j]);
                         if (diff < result) {
                             result = diff;
                         }
                     }
                 }
+                System.out.println("bl: " + result);
                 if (getFinalResult() > result) {
                     setFinalResult(result);
                 }
@@ -67,21 +68,18 @@ public class ThreadedMinimumPairwiseDistance implements MinimumPairwiseDistance 
         };
         bottomLeft.start();
 
-
-//            for (int i = N/2; i < N; ++i) {
-//                for (int j = N/2; j < i; ++j) {
         Thread topRight = new Thread() {
             long result = Integer.MAX_VALUE;
             public void run() {
                 for (int i = N/2; i < N; ++i) {
                     for (int j = N/2; j < i; ++j) {
-                        // Gives us all the pairs (i, j) where 0 <= j < i < values.length
                         long diff = Math.abs(values[i] - values[j]);
                         if (diff < result) {
                             result = diff;
                         }
                     }
                 }
+                System.out.println("tr: " + result);
                 if (getFinalResult() > result) {
                     setFinalResult(result);
                 }
@@ -89,21 +87,18 @@ public class ThreadedMinimumPairwiseDistance implements MinimumPairwiseDistance 
         };
         topRight.start();
 
-
-//            for (int j = 0; j + N/2 < N; ++j) {
-//                for (int i = N/2; i < j; ++i) {
         Thread center = new Thread() {
             long result = Integer.MAX_VALUE;
             public void run() {
                 for (int j = 0; j + N/2 < N; ++j) {
                     for (int i = N/2; i < j; ++i) {
-                        // Gives us all the pairs (i, j) where 0 <= j < i < values.length
                         long diff = Math.abs(values[i] - values[j]);
                         if (diff < result) {
                             result = diff;
                         }
                     }
                 }
+                System.out.println("cen: " + result);
                 if (getFinalResult() > result) {
                     setFinalResult(result);
                 }
